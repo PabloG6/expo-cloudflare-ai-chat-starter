@@ -18,10 +18,10 @@
     {
       "binding": "HYPERDRIVE",
       "id": "<your-hyperdrive-id>",
-      "localConnectionString": "postgresql://postgres:postgres@localhost:5432/nexus_starter"
+      "localConnectionString": "postgresql://postgres:postgres@localhost:5432/dropoff"
     }
   ],
   "vars": {
-    "AUTH_ORIGIN": "http://localhost:8393"
+    "AUTH_ORIGIN": "https://next-auth.pdfparse.net"
   }
 }

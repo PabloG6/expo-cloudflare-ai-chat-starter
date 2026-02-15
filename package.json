@@ -5,7 +5,7 @@
   "description": "Cloudflare + Better Auth + tRPC + Agents + Expo starter",
   "packageManager": "pnpm@10.22.0",
   "scripts": {
-    "dev": "pnpm -r --parallel --if-present --filter @starter/api --filter @starter/auth-worker --filter @starter/assistant run dev",
+    "dev": "pnpm -r --parallel --if-present --filter @starter/api --filter @starter/auth-worker --filter @starter/assistant --filter @starter/mobile run dev",
     "dev:api": "pnpm --filter @starter/api dev",
     "dev:auth": "pnpm --filter @starter/auth-worker dev",
     "dev:assistant": "pnpm --filter @starter/assistant dev",

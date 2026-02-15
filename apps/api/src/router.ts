@@ -28,7 +28,7 @@ const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
 type ProtectedContext = Context & { userId: string };
 
 function dbFromCtx(ctx: Context) {
-  const url = ctx.env.HYPERDRIVE?.connectionString ?? ctx.env.DATABASE_URL;
+  const url = ctx.env.DATABASE_URL ?? ctx.env.HYPERDRIVE?.connectionString;
   if (!url) {
     throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database URL is not configured." });
   }

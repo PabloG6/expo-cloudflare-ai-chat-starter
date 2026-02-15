@@ -5,24 +5,32 @@
   "private": true,
   "scripts": {
     "start": "expo start",
+    "dev": "expo start -c --ios",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-sdk/react": "^3.0.80",
     "@better-auth/expo": "^1.4.18",
     "@starter/api": "workspace:*",
     "@tanstack/react-query": "^5.90.5",
     "@trpc/client": "^11.7.1",
     "@trpc/tanstack-react-query": "^11.10.0",
+    "agents": "^0.4.0",
     "better-auth": "^1.4.18",
     "expo": "~54.0.33",
+    "expo-linking": "~8.0.11",
+    "expo-network": "~8.0.8",
     "expo-secure-store": "~15.0.7",
     "expo-status-bar": "~3.0.9",
+    "expo-web-browser": "~15.0.10",
     "react": "19.1.0",
     "react-native": "0.81.5",
-    "superjson": "^2.2.2"
+    "react-native-get-random-values": "^1.11.0",
+    "superjson": "^2.2.2",
+    "web-streams-polyfill": "^4.2.0"
   },
   "devDependencies": {
     "@types/react": "~19.1.0",

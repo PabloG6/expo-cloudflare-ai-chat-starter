@@ -17,7 +17,8 @@ export type StarterAuthEnv = {
 };
 
 function resolveDatabaseUrl(env: Partial<StarterAuthEnv>) {
-  const url = env.HYPERDRIVE?.connectionString ?? env.DATABASE_URL;
+  // Prefer explicit DATABASE_URL so local dev is not coupled to Hyperdrive config.
+  const url = env.DATABASE_URL ?? env.HYPERDRIVE?.connectionString;
   if (!url) {
     throw new Error("Missing database connection (HYPERDRIVE.connectionString or DATABASE_URL).");
   }
@@ -39,7 +40,6 @@ function normalizeAuthBaseUrl(origin: string) {
 export function createAuth(env: StarterAuthEnv) {
   const authOrigin = resolveAuthOrigin(env);
   const databaseUrl = resolveDatabaseUrl(env);
-
   return betterAuth({
     secret: env.BETTER_AUTH_SECRET,
     baseURL: normalizeAuthBaseUrl(authOrigin),
