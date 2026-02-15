@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useContext, useMemo, useState } from "react";
 import { useAgent } from "agents/react";
 import { useAgentChat } from "agents/ai-react";
 import { authClient } from "../lib/authClient";
+import { getAuthJwt } from "../lib/getAuthJwt";
 
 const ASSISTANT_URL =
   (process.env.EXPO_PUBLIC_ASSISTANT_URL as string | undefined) ?? "http://localhost:8788";
@@ -45,47 +46,7 @@ function getDayKey() {
 export function ChatProvider({ children }: { children: React.ReactNode }) {
   const { data: sessionData } = authClient.useSession();
   const userId = sessionData?.user?.id ? String(sessionData.user.id) : null;
-
-  const [jwt, setJwt] = useState<string | null>(null);
-  const [authReady, setAuthReady] = useState(false);
-
-  useEffect(() => {
-    let active = true;
-
-    const loadToken = async () => {
-      if (!userId) {
-        if (active) {
-          setJwt(null);
-          setAuthReady(true);
-        }
-        return;
-      }
-
-      setAuthReady(false);
-      try {
-        const { data, error } = await authClient.token();
-        if (!active) return;
-        if (error || !data?.token) {
-          setJwt(null);
-          setAuthReady(true);
-          return;
-        }
-
-        setJwt(data.token);
-        setAuthReady(true);
-      } catch {
-        if (!active) return;
-        setJwt(null);
-        setAuthReady(true);
-      }
-    };
-
-    void loadToken();
-
-    return () => {
-      active = false;
-    };
-  }, [userId]);
+  const [tokenVersion, setTokenVersion] = useState(0);
 
   const sessionName = useMemo(() => {
     if (!userId) return "anonymous";
@@ -96,8 +57,24 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     agent: "chat",
     name: sessionName,
     host: normalizeAgentHost(ASSISTANT_URL),
-    enabled: Boolean(userId && jwt),
-    query: async () => ({ token: jwt ?? "" }),
+    enabled: Boolean(userId),
+    queryDeps: [tokenVersion],
+    cacheTtl: 10 * 60 * 1000,
+    query: async () => {
+      const token = await getAuthJwt({
+        force: tokenVersion > 0,
+        ttlMs: 15 * 60 * 1000,
+      });
+      if (!token) {
+        throw new Error("Failed to fetch auth token for assistant");
+      }
+      return { token };
+    },
+    onClose: (event) => {
+      if ([1008, 4001, 4003].includes(event.code)) {
+        setTokenVersion((v) => v + 1);
+      }
+    },
   });
 
   const chat = useAgentChat({ agent });
@@ -105,10 +82,10 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo(
     () => ({
       chat,
-      connected: Boolean(userId && jwt),
-      authReady,
+      connected: Boolean(userId),
+      authReady: true,
     }),
-    [chat, userId, jwt, authReady],
+    [chat, userId],
   );
 
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
