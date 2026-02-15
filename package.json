@@ -1,0 +1,20 @@
+{
+  "name": "nexus-starter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cloudflare + Better Auth + tRPC + Agents + Expo starter",
+  "packageManager": "pnpm@10.22.0",
+  "scripts": {
+    "dev": "pnpm -r --parallel --if-present --filter @starter/api --filter @starter/auth-worker --filter @starter/assistant run dev",
+    "dev:api": "pnpm --filter @starter/api dev",
+    "dev:auth": "pnpm --filter @starter/auth-worker dev",
+    "dev:assistant": "pnpm --filter @starter/assistant dev",
+    "dev:mobile": "pnpm --filter @starter/mobile start",
+    "type-check": "pnpm -r --if-present run type-check",
+    "db:generate": "pnpm --filter @starter/db db:generate",
+    "db:push": "pnpm --filter @starter/db db:push"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

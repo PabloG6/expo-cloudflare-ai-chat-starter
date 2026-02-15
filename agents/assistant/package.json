@@ -1,0 +1,27 @@
+{
+  "name": "@starter/assistant",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --ip 127.0.0.1 --port 8788 --inspector-port 9230 --persist-to ../../.wrangler/state",
+    "start": "wrangler dev --ip 127.0.0.1 --port 8788 --inspector-port 9230 --persist-to ../../.wrangler/state",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@cloudflare/ai-chat": "^0.0.8",
+    "@openrouter/ai-sdk-provider": "^2.1.1",
+    "@starter/auth": "workspace:*",
+    "@starter/shared": "workspace:*",
+    "agents": "^0.4.0",
+    "ai": "^6.0.5"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260214.0",
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.65.0"
+  }
+}

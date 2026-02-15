@@ -1,0 +1,42 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "starter-assistant",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-02-12",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "./public"
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["AIAssistant"]
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "AIAssistant",
+        "name": "chat"
+      }
+    ]
+  },
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "<your-hyperdrive-id>",
+      "localConnectionString": "postgresql://postgres:postgres@localhost:5432/nexus_starter"
+    }
+  ],
+  "vars": {
+    "AUTH_ORIGIN": "http://localhost:8393",
+    "OPEN_ROUTER_MODEL": "z-ai/glm-4.7-flash"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@starter/auth-worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --port 8393 --inspector-port 9232 --persist-to ../../.wrangler-state/auth-worker",
+    "start": "wrangler dev --port 8393 --inspector-port 9232 --persist-to ../../.wrangler-state/auth-worker",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@starter/auth": "workspace:*",
+    "@starter/shared": "workspace:*",
+    "hono": "^4.9.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260214.0",
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.65.0"
+  }
+}

@@ -1,0 +1,7 @@
+BETTER_AUTH_SECRET=replace-me
+AUTH_ORIGIN=http://localhost:8393
+GOOGLE_CLIENT_ID=replace-me
+GOOGLE_CLIENT_SECRET=replace-me
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/nexus_starter
+OPENROUTER_API_KEY=
+OPEN_ROUTER_MODEL=z-ai/glm-4.7-flash

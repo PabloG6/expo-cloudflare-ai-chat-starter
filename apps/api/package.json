@@ -1,0 +1,29 @@
+{
+  "name": "@starter/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./src/router": "./src/router.ts"
+  },
+  "scripts": {
+    "dev": "wrangler dev --port 8787 --inspector-port 9229 --persist-to ../../.wrangler/state",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@starter/auth": "workspace:*",
+    "@starter/db": "workspace:*",
+    "@starter/shared": "workspace:*",
+    "@trpc/server": "^11.7.1",
+    "superjson": "^2.2.2",
+    "zod": "^4.1.11"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260214.0",
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.65.0"
+  }
+}
